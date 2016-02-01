@@ -1,0 +1,25 @@
+- functionality
+  - cache module that works on the top of file module
+
+- schema
+  - property validators in schema (min, max, nullable)
+  - 
+
+- resource
+  - handy APIs (find, filter, order, ...)
+
+- seed
+  - load data from seed directory
+
+- generators
+  - an option to auto generate sample data using some options
+    - sample count for each resource
+    - patterns and ranges of values
+    - relations number range for $has_many
+
+- options
+  - inject referenced objects
+  - remove corresponding relations of deleted object
+
+- data types
+  - array type
