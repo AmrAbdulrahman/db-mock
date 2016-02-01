@@ -1,0 +1,14 @@
+{
+  "name": {
+    "type": "string",
+    "nullable": false
+  },
+  "age": "number",
+  "DOB": "date",
+  "$has": [
+    "profile"
+  ],
+  "$has_many": [
+    "course"
+  ]
+}

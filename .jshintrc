@@ -1,0 +1,14 @@
+{
+  "strict": "global",
+  "undef": true,
+  "curly": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "browser": true,
+  "globals": {
+    "_": true,
+    "module": true,
+    "require": true,
+    "console": true
+  }
+}

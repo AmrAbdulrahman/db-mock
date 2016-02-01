@@ -1,0 +1,6 @@
+{
+  "data": "db/data/",
+  "schema": "db/schema/",
+  "seed": "db/seed/",
+  "IDProperty": "ID"
+}

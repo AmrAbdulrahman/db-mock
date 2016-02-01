@@ -1,0 +1,22 @@
+{
+  "name": "db-mock",
+  "version": "1.0.0",
+  "description": "DB mock",
+  "main": "index.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "express": "^4.13.4",
+    "lodash": "^4.0.1",
+    "rimraf": "^2.5.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.12.0",
+    "load-grunt-tasks": "^3.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amr Abdulrahman",
+  "license": "ISC"
+}
