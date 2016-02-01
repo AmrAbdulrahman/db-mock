@@ -7,15 +7,17 @@ module.exports = function(grunt) {
     return require('./grunt/' + name)(grunt, config);
   }
 
-  // Plugins
+  // plugins
   require('load-grunt-tasks')(grunt);
   
-  // Configurations
+  // configurations
   grunt.initConfig({
-    jshint: loadGruntTask('jshint')
+    jshint: loadGruntTask('jshint'),
+    jscs: loadGruntTask('jscs')
   });
 
   grunt.registerTask('default', [
-    'jshint:all'
+    'jshint:all',
+    'jscs:all'
   ]);
 };

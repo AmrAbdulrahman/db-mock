@@ -69,7 +69,7 @@ function Resource(schema) {
         }
       });
 
-      // TODO: $has_all
+      // todo: $has_all
       // ...
 
       // write file
