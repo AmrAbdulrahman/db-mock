@@ -1,31 +1,11 @@
 'use strict';
 
 var _ = require('lodash'),
-    dataTypes = require('./data-types'),
-    logger = require('./logger');
-
-var resourcePropertyDefaults = {
-  type: 'string',
-  nullable: true
-};
-
-var relationsProps = ['$has', '$has_many'];
-
-function ResourceProperty(propertyDefinition) {
-  var that = this;
-
-  if (_.isString(propertyDefinition) === true) {
-    propertyDefinition = {
-      type: propertyDefinition
-    };
-
-    propertyDefinition = _.defaults(propertyDefinition, resourcePropertyDefaults);
-  }
-
-  _.each(propertyDefinition, function(value, key) {
-    that[key] = value;
-  });
-}
+    dataTypes = require('../data-types'),
+    logger = require('../logger'),
+    internalConfig = require('../config-internal'),
+    SchemaObjectRelations = require('./schema-object-relations'),
+    SchemaObjectProperty = require('./schema-object-property');
 
 function SchemaObject(name, resourceSchema) {
   var that = this;
@@ -33,12 +13,16 @@ function SchemaObject(name, resourceSchema) {
   this.$name = name;
 
   _.each(resourceSchema, function(propertyDefinition, propertyName) {
-    if (_.indexOf(relationsProps, propertyName) !== -1) {
-      that[propertyName] = propertyDefinition;
+    if(propertyName === internalConfig.relationsProperty) {
+      that[propertyName] = new SchemaObjectRelations(propertyDefinition);
     } else {
-      that[propertyName] = new ResourceProperty(propertyDefinition);
+      that[propertyName] = new SchemaObjectProperty(propertyDefinition);
     }
   });
+
+  if (_.isUndefined(that[internalConfig.relationsProperty]) === true) {
+    that[internalConfig.relationsProperty] = new SchemaObjectRelations({});
+  }
 
   this.props = function(options) {
     options = options || {};
@@ -56,7 +40,7 @@ function SchemaObject(name, resourceSchema) {
 
     // remove relations
     return _.filter(res, function(prop) {
-      return _.indexOf(relationsProps, prop) === -1;
+      return prop !== internalConfig.relationsProperty;
     });
   };
 
@@ -65,16 +49,22 @@ function SchemaObject(name, resourceSchema) {
 
     var errors = [];
 
-    // validate that $has and $has_many have valid references
-    var relations = _.concat([], that.$has || [], that.$has_many || []);
+    // validate that relations are valid references
+    var relations = [];
+
+    if(_.isUndefined(that.$has) === false) {
+      relations = _.concat(that.$has.one, that.$has.many);
+    }
 
     _.each(relations, function(relation) {
-      if (that.$name === relation) {
+      var relationWith = relation.relationWith;
+
+      if (that.$name === relationWith) {
         errors.push('resource (' + that.$name + ') references itself');
       }
 
-      if (_.isUndefined(schema[relation]) === true) {
-        errors.push('resource (' + that.$name + ') references non-existing resource (' + relation + ')'); 
+      if (_.isUndefined(schema[relationWith]) === true) {
+        errors.push('resource (' + that.$name + ') references non-existing resource (' + relationWith + ')'); 
       }
     });
 

@@ -12,8 +12,11 @@ function validate(resource, prop, type) {
 
   if ((type === 'string' && _.isString(value) === false) || 
       (type === 'date' && _.isDate(value) === false) || 
-      (type === 'number' && _.isNumber(value) === false)) {
-    throw new Error('invalid value (' + value + ') assigned to (' + prop + '), should be of type (' + type + ')');
+      (type === 'number' && _.isNumber(value) === false) ||
+      (type === 'bool' && _.isBoolean(value) === false) ||
+      (type === 'array' && _.isArray(value) === false) ||
+      (type === 'object' && _.isPlainObject(value) === false)) {
+    throw new Error('invalid value (' + value + ') of type (' + typeof(value) + ') assigned to (' + prop + '), should be of type (' + type + ')');
   } else if (dataTypes.indexOf(type) === -1) {
     throw new Error('(' + type + ') unknown');
   }

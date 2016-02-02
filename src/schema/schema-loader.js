@@ -3,11 +3,10 @@
 var fs = require('fs'),
     _ = require('lodash'),
     path = require('path'),
-    config = require('./config'),
-    logger = require('./logger'),
-    dataTypes = require('./data-types'),
+    config = require('../config'),
+    logger = require('../logger'),
+    utils = require('../utils'),
     SchemaObject = require('./schema-object'),
-    utils = require('./utils'),
     schemaInstance = null;
 
 function getResourceName(fileName) {
@@ -42,7 +41,7 @@ function load() {
       schema[resourceName] = new SchemaObject(resourceName, resourceSchema);
       resourcesCount++;
     } catch (e) {
-      errors.push('(' + file + ') is not a valid json');
+      errors.push(e.message);
     }
   });
 

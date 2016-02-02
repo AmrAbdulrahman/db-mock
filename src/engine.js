@@ -1,7 +1,7 @@
 'use strict';
 
 var logger = require('./logger'),
-    schema = require('./schema'),
+    schema = require('./schema/schema-loader'),
     resource = require('./resource');
 
 function run() {

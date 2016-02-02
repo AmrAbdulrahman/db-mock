@@ -3,5 +3,8 @@
 module.exports = [
   'string',
   'date',
-  'number'
+  'number',
+  'bool',
+  'array',
+  'object'
 ];

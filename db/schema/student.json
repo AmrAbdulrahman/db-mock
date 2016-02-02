@@ -1,14 +1,24 @@
 {
   "name": {
     "type": "string",
-    "nullable": false
+    "required": true
   },
-  "age": "number",
+  "age": {
+    "type": "number",
+    "min": 0,
+    "max": 100
+  },
   "DOB": "date",
-  "$has": [
-    "profile"
-  ],
-  "$has_many": [
-    "course"
-  ]
+  "married": "bool",
+  "sons": {
+    "type": "array",
+    "required": true
+  },
+  "$has": {
+    "one": [{
+      "relationWith": "profile",
+      "required": true
+    }],
+    "many": ["course"]
+  }
 }

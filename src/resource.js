@@ -3,7 +3,7 @@
 var fs = require('fs'),
     _ = require('lodash'),
     path = require('path'),
-    schema_ = require('./schema'),
+    schema_ = require('./schema/schema-loader'),
     config = require('./config'),
     logger = require('./logger'),
     utils = require('./utils'),
@@ -24,8 +24,16 @@ function Resource(schema) {
 
   this.get = function(id) {
     try {
-      var objPath = path.join(resourceDirPath, id + '.json');
-      var obj = utils.readFile(objPath);
+      var objPath = path.join(resourceDirPath, id + '.json'),
+          obj = utils.readFile(objPath);
+
+      // parse date
+      _.each(obj, function(value, prop) {
+        if (schema[prop] && schema[prop].type === 'date') {
+          obj[prop] = new Date(value);
+        }
+      });
+
       return obj;
     } catch (e) {
       logger.warn('Failed to get object with id =', id);
