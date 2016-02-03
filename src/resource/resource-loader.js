@@ -5,8 +5,8 @@ var _ = require('lodash'),
     userConfig = require('../config/user'),
     logger = require('../logger'),
     utils = require('../utils'),
-    Resource = require('./resource'),
-    ResourceCollection = {};
+    resourcesCollection = require('./resources-collection'),
+    Resource = require('./resource');
 
 function load() {
   logger.info('loading resources...', {bold: true});
@@ -16,29 +16,12 @@ function load() {
 
   // create resources
   _.each(schema.get(), function(resourceSchema) {
-    ResourceCollection[resourceSchema.$name] = new Resource(resourceSchema);
+    resourcesCollection.of[resourceSchema.$name] = new Resource(resourceSchema);
   });
 
-  return ResourceCollection;
-}
-
-function get(resourceName) {
-  if (_.isEmpty(ResourceCollection)) {
-    return logger.error('resources are not loaded yet');
-  }
-
-  if (resourceName && _.isUndefined(ResourceCollection[resourceName])) {
-    return logger.error('(' + resourceName + ') can\'t be found');
-  }
-
-  if (resourceName) {
-    return ResourceCollection[resourceName];
-  } else {
-    return ResourceCollection;
-  }
+  return resourcesCollection.get();
 }
 
 module.exports = {
-  load: load,
-  get: get
+  load: load
 };

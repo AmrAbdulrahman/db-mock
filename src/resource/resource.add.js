@@ -5,7 +5,8 @@ var _ = require('lodash'),
     logger = require('../logger'),
     utils = require('../utils'),
     userConfig = require('../config/user'),
-    dataTypeValidate = require('../data-type-validate');
+    dataTypeValidate = require('../data-type-validate'),
+    resourcesCollection = require('./resources-collection');
 
 module.exports = function(Resource) {
   Resource.prototype.add = function(resource) {
@@ -14,7 +15,7 @@ module.exports = function(Resource) {
     try {
       var object = {};
 
-      // assign ID
+      // assign ID then tick
       object[userConfig.IDProperty] = self.idTick.get();
       self.idTick.increment();
 
@@ -36,7 +37,7 @@ module.exports = function(Resource) {
 
         // valid foreign ID
         if (_.isNumber(foreignID) === true) {
-          var referencedResource = ResourceCollection[relationResource].get(foreignID);
+          var referencedResource = resourcesCollection.of[relationResource].get(foreignID);
 
           if (_.isNull(referencedResource) === true) {
             throw new Error(relationResource + ' has no object with ID = ' + foreignID);

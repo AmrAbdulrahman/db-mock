@@ -1,13 +1,14 @@
 'use strict';
 
 var engine = require('./engine'),
-    Resource = require('./resource/resource-loader');
+    resourcesCollection = require('./resource/resources-collection'),
+    exports = module.exports; // because we gonna assign 'Resource' at some point of time
 
-function load() {
+exports.load = function () {
     engine.run();
-}
 
-module.exports = {
-    load: load,
-    Resource: Resource
+    // this is to allow user to access resources by key
+    // without the need of calling .get() first
+    // now user can => db.Resource.student.operation()
+    exports.Resource = resourcesCollection.get();
 };

@@ -14,4 +14,4 @@ db.load();
 //   sons: ['koko', 'soso']
 // });
 
-console.log(db.Resource.get().student.get(0));
+console.log(db.Resource.student.get(0));
