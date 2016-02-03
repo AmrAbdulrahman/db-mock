@@ -5,25 +5,26 @@ var path = require('path'),
     utils = require('../utils');
 
 function IDTick(resourceDirPath) {
-    var resourceIDPath = path.join(resourceDirPath, internalConfig.IDTickFile);
-    var tick = utils.readFile(resourceIDPath, {
-        failSoft: true
-    });
+    var self = this,
+        resourceIDPath = path.join(resourceDirPath, internalConfig.IDTickFile),
+        tick = utils.readFile(resourceIDPath, {
+            failSoft: true
+        });
 
     if (tick === false) {
-        this.tick = internalConfig.IDStartValue;
-        utils.writeFile(resourceIDPath, this.tick);
+        self.tick = internalConfig.IDStartValue;
+        utils.writeFile(resourceIDPath, self.tick);
     } else {
-        this.tick = tick;
+        self.tick = tick;
     }
 
-    this.get = function() {
-        return this.tick;
+    self.get = function() {
+        return self.tick;
     };
 
-    this.increment = function() {
-        this.tick++;
-        utils.writeFile(resourceIDPath, this.tick);
+    self.increment = function() {
+        self.tick++;
+        utils.writeFile(resourceIDPath, self.tick);
     };
 }
 

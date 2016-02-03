@@ -9,23 +9,23 @@ var _ = require('lodash'),
 
 module.exports = function(Resource) {
   Resource.prototype.add = function(resource) {
-    var that = this;
+    var self = this;
 
     try {
       var object = {};
 
       // assign ID
-      object[userConfig.IDProperty] = this.idTick.get();
-      this.idTick.increment();
+      object[userConfig.IDProperty] = self.idTick.get();
+      self.idTick.increment();
 
       // note: going through the schema prunes extra data
-      _.each(that.$schema.props({withRelations: false}), function(prop) {
-        dataTypeValidate(resource, prop, that.$schema[prop].type);
+      _.each(self.$schema.props({withRelations: false}), function(prop) {
+        dataTypeValidate(resource, prop, self.$schema[prop].type);
         object[prop] = resource[prop];
       });
 
       // check $has
-      _.each(that.$schema.$has, function(relationResource) {
+      _.each(self.$schema.$has, function(relationResource) {
         var relationResourceProp = relationResource + '_id',
             foreignID = resource[relationResourceProp];
 
@@ -46,17 +46,14 @@ module.exports = function(Resource) {
         }
       });
 
-      // todo: $has_all
-      // ...
-
       // write file
-      var objPath = path.join(that.$resourceDirPath, object[userConfig.IDProperty] + '.json');
+      var objPath = path.join(self.$resourceDirPath, object[userConfig.IDProperty] + '.json');
       utils.writeFile(objPath, object);
 
       // return the newly created obj
       return object;
     } catch (e) {
-      logger.error('Failed to save', '('+this.$name+')' , e.message);
+      logger.error('Failed to save', '(' + self.$name + ')' , e.message);
     }
   };
 };

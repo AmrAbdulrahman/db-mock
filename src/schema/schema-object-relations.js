@@ -9,10 +9,10 @@ var schemaObjectRelationsDefaults = {
 };
 
 function SchemaObjectRelations(relationsDefinition) {
-  var that = this;
+  var self = this;
 
-  that.one = [];
-  that.many = [];
+  self.one = [];
+  self.many = [];
 
   if (_.isPlainObject(relationsDefinition) === false) {
     throw new Error('($has) should be an object of (one) and (many) properties');
@@ -33,7 +33,7 @@ function SchemaObjectRelations(relationsDefinition) {
   _.each(['one', 'many'], function(relationType) {
     _.each(relationsDefinition[relationType], function(relation) {
       var schemaObjectRelation = new SchemaObjectRelation(relation);
-      that[relationType].push(schemaObjectRelation);
+      self[relationType].push(schemaObjectRelation);
     });
   });
 }

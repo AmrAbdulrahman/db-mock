@@ -7,15 +7,15 @@ var _ = require('lodash'),
 
 module.exports = function(Resource) {
   Resource.prototype.get = function(id) {
-    var that = this;
+    var self = this;
 
     try {
-      var objPath = path.join(that.$resourceDirPath, id + '.json'),
+      var objPath = path.join(self.$resourceDirPath, id + '.json'),
           obj = utils.readFile(objPath);
 
       // parse date
       _.each(obj, function(value, prop) {
-        if (that.$schema[prop] && that.$schema[prop].type === 'date') {
+        if (self.$schema[prop] && self.$schema[prop].type === 'date') {
           obj[prop] = new Date(value);
         }
       });

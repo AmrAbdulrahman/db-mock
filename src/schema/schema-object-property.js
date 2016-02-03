@@ -9,7 +9,7 @@ var schemaObjectPropertyDefaults = {
 };
 
 function SchemaObjectProperty(propertyDefinition) {
-  var that = this;
+  var self = this;
 
   if (_.isString(propertyDefinition) === true) {
     propertyDefinition = {
@@ -20,7 +20,7 @@ function SchemaObjectProperty(propertyDefinition) {
   }
 
   _.each(propertyDefinition, function(value, key) {
-    that[key] = value;
+    self[key] = value;
   });
 }
 

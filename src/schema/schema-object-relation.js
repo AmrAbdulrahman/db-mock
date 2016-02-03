@@ -8,7 +8,7 @@ var schemaObjectRelationDefaults = {
 };
 
 function SchemaObjectRelation(relationDefinition) {
-  var that = this;
+  var self = this;
 
   if (_.isString(relationDefinition) === true) {
     relationDefinition = {
@@ -19,7 +19,7 @@ function SchemaObjectRelation(relationDefinition) {
   }
 
   _.each(relationDefinition, function(value, key) {
-    that[key] = value;
+    self[key] = value;
   });
 }
 

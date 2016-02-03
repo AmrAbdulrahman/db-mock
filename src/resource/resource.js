@@ -7,17 +7,19 @@ var path = require('path'),
     IDTick = require('./id-tick');
 
 function Resource(schema) {
-  this.$schema = schema;
-  this.$name = schema.$name;
-  this.$resourceDirPath = path.join(userConfig.data, this.$name);
+  var self = this;
+  
+  self.$schema = schema;
+  self.$name = schema.$name;
+  self.$resourceDirPath = path.join(userConfig.data, self.$name);
 
-  logger.info('loading', this.$name, '...');
+  logger.info('loading', self.$name, '...');
 
   // mkdir for resource
-  utils.mkDir(this.$resourceDirPath);
+  utils.mkDir(self.$resourceDirPath);
 
   // read/create/set id tick
-  this.idTick = new IDTick(this.$resourceDirPath);
+  self.idTick = new IDTick(self.$resourceDirPath);
 }
 
 require('./resource.get')(Resource);
