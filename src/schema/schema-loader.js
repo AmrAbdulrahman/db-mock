@@ -3,7 +3,7 @@
 var fs = require('fs'),
     _ = require('lodash'),
     path = require('path'),
-    config = require('../config'),
+    userConfig = require('../config/user'),
     logger = require('../logger'),
     utils = require('../utils'),
     SchemaObject = require('./schema-object'),
@@ -14,7 +14,7 @@ function getResourceName(fileName) {
 }
 
 function load() {
-  logger.notify('loading schema from', config.schema, '...', {bold: true});
+  logger.notify('loading schema from', userConfig.schema, '...', {bold: true});
 
   var resourcesFiles = [],
       resourcesCount = 0,
@@ -22,18 +22,18 @@ function load() {
       errors = [];
 
   try {
-    resourcesFiles = fs.readdirSync(config.schema);
+    resourcesFiles = fs.readdirSync(userConfig.schema);
   } catch (e) {
-    logger.error(config.schema, 'not found');
+    logger.error(userConfig.schema, 'not found');
     throw new Error('Can\'t load schema.');
   }
 
   if (resourcesFiles.length === 0) {
-    logger.warn(config.schema, 'is empty');
+    logger.warn(userConfig.schema, 'is empty');
   }
 
   _.each(resourcesFiles, function(file) {
-    var resourcePath = path.join(config.schema, file),
+    var resourcePath = path.join(userConfig.schema, file),
         resourceSchema = utils.readFile(resourcePath);
 
     try {

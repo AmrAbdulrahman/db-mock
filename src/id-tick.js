@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require('path'),
-    internalConfig = require( './config-internal'),
+    internalConfig = require( './config/internal'),
     utils = require('./utils');
 
 function IDTick(resourceDirPath) {

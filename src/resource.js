@@ -4,7 +4,7 @@ var fs = require('fs'),
     _ = require('lodash'),
     path = require('path'),
     schema_ = require('./schema/schema-loader'),
-    config = require('./config'),
+    userConfig = require('./config/user'),
     logger = require('./logger'),
     utils = require('./utils'),
     IDTick = require('./id-tick'),
@@ -16,7 +16,7 @@ function Resource(schema) {
   logger.notify('loading', this.$name, '...');
 
   // mkdir for resource
-  var resourceDirPath = path.join(config.data, this.$name);
+  var resourceDirPath = path.join(userConfig.data, this.$name);
   utils.mkDir(resourceDirPath);
 
   // read/create/set id tick
@@ -46,7 +46,7 @@ function Resource(schema) {
       var object = {};
 
       // assign ID
-      object[config.IDProperty] = this.idTick.get();
+      object[userConfig.IDProperty] = this.idTick.get();
       this.idTick.increment();
 
       // note: going through the schema prunes extra data
@@ -81,7 +81,7 @@ function Resource(schema) {
       // ...
 
       // write file
-      var objPath = path.join(resourceDirPath, object[config.IDProperty] + '.json');
+      var objPath = path.join(resourceDirPath, object[userConfig.IDProperty] + '.json');
       utils.writeFile(objPath, object);
 
       // return the newly created obj
@@ -96,7 +96,7 @@ function load() {
   logger.notify('loading resources...', {bold: true});
   
   // mkdir data
-  utils.mkDir(config.data);
+  utils.mkDir(userConfig.data);
 
   // create resources
   var schema = schema_.get();

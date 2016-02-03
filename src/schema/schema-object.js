@@ -3,7 +3,7 @@
 var _ = require('lodash'),
     dataTypes = require('../data-types'),
     logger = require('../logger'),
-    internalConfig = require('../config-internal'),
+    internalConfig = require('../config/internal'),
     SchemaObjectRelations = require('./schema-object-relations'),
     SchemaObjectProperty = require('./schema-object-property');
 
