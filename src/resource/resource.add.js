@@ -21,6 +21,10 @@ module.exports = function(Resource) {
 
       // note: going through the schema prunes extra data
       _.each(self.$schema.props({withRelations: false}), function(prop) {
+        if (_.isUndefined(resource[prop]) === true) {
+          return;
+        }
+        
         dataTypeValidate(resource, prop, self.$schema[prop].type);
         object[prop] = resource[prop];
       });
