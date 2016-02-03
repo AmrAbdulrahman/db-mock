@@ -12,15 +12,15 @@ function mkDir(path, options) {
 
   try {
     fs.mkdirSync(path);
-    logger.notify(path, 'created');
+    logger.info(path, 'created');
   } catch (e) {
     if (e.code === 'EEXIST') {
-      logger.notify(path, 'already exists');
+      logger.info(path, 'already exists');
 
       if (options.cleanIfExist === true) {
         rimraf.sync(path); // remove folder first
         fs.mkdirSync(path);
-        logger.notify(path, 'cleaned');        
+        logger.info(path, 'cleaned');        
       }
     } else {
       logger.error('can\'t create dir:', path);
@@ -41,7 +41,7 @@ function readFile(path, options) {
       file = JSON.parse(file);
     }
 
-    logger.notify('read', path);
+    logger.info('read', path);
     return file;
   } catch (e) {
     if (options.failSoft) {
@@ -63,7 +63,7 @@ function writeFile(path, data, options) {
     }
 
     fs.writeFileSync(path, data);
-    logger.notify('write', path);
+    logger.info('write', path);
   } catch (e) {
     logger.error('can\'t write file', path);
   }

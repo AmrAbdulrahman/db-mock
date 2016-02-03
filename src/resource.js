@@ -13,7 +13,7 @@ var fs = require('fs'),
 
 function Resource(schema) {
   this.$name = schema.$name;
-  logger.notify('loading', this.$name, '...');
+  logger.info('loading', this.$name, '...');
 
   // mkdir for resource
   var resourceDirPath = path.join(userConfig.data, this.$name);
@@ -93,7 +93,7 @@ function Resource(schema) {
 }
 
 function load() {
-  logger.notify('loading resources...', {bold: true});
+  logger.info('loading resources...', {bold: true});
   
   // mkdir data
   utils.mkDir(userConfig.data);

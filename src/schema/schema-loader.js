@@ -14,7 +14,7 @@ function getResourceName(fileName) {
 }
 
 function load() {
-  logger.notify('loading schema from', userConfig.schema, '...', {bold: true});
+  logger.info('loading schema from', userConfig.schema, '...', {bold: true});
 
   var resourcesFiles = [],
       resourcesCount = 0,
@@ -67,7 +67,7 @@ function load() {
 }
 
 function validate(schema) {
-  logger.notify('validating schema...', {bold: true});
+  logger.info('validating schema...', {bold: true});
 
   var errors = [];
 

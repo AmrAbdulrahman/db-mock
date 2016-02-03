@@ -4,13 +4,13 @@ var colors = require('colors');
 
 colors.setTheme({
   success: 'green',
-  notify: 'cyan',
+  info: 'cyan',
   warn: 'yellow',
   error: 'red'
 });
 
 var logType = {
-  NOTIFY:   'INFO   ',
+  INFO:     'INFO   ',
   WARN:     'WARN   ',
   ERROR:    'ERROR  ',
   SUCCESS:  'SUCCESS'
@@ -54,8 +54,8 @@ function log(type, msgParts) {
   }
 
   switch(type) {
-    case logType.NOTIFY:
-      console.log(msg.notify);
+    case logType.INFO:
+      console.log(msg.info);
       break;
     case logType.WARN:
       console.log(msg.warn);
@@ -69,8 +69,8 @@ function log(type, msgParts) {
   }
 }
 
-function notify() {
-  log(logType.NOTIFY, arguments);
+function info() {
+  log(logType.INFO, arguments);
 }
 
 function warn() {
@@ -86,7 +86,7 @@ function success() {
 }
 
 module.exports = {
-  notify: notify,
+  info: info,
   warn: warn,
   error: error,
   success: success

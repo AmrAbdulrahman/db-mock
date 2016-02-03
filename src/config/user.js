@@ -14,7 +14,7 @@ var configDefaults = {
 };
 
 try {
-    logger.notify('reading user config...', {bold: true});
+    logger.info('reading user config...', {bold: true});
     userConfig = utils.readFile(internalConfig.userConfigFilePath);
     logger.success('config read successfully');
 } catch(e) {

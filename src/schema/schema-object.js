@@ -45,7 +45,7 @@ function SchemaObject(name, resourceSchema) {
   };
 
   this.validate = function(schema) {
-    logger.notify('validating', that.$name ,'...');
+    logger.info('validating', that.$name ,'...');
 
     var errors = [];
 
