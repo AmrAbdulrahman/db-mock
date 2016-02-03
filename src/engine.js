@@ -2,15 +2,11 @@
 
 var logger = require('./logger'),
     schema = require('./schema/schema-loader'),
-    resource = require('./resource');
+    resource = require('./resource/resource-loader');
 
 function run() {
-  try {
-    schema.load();
-    resource.load();
-  } catch (e) {
-    logger.error(e.message);
-  }
+  schema.load();
+  resource.load();
 }
 
 module.exports = {

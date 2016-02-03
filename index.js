@@ -2,7 +2,6 @@ var db = require('./src');
 
 db.load();
 
-// add profile
 // var profile = db.Resource.get().profile.add({
 //   address: 'address1',
 //   phone: '01212121212'
@@ -15,4 +14,4 @@ db.load();
 //   sons: ['koko', 'soso']
 // });
 
-console.log(db.Resource.get().student.get(9));
+console.log(db.Resource.get().student.get(0));

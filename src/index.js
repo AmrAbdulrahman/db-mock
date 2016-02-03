@@ -1,7 +1,7 @@
 'use strict';
 
 var engine = require('./engine'),
-    Resource = require('./resource');
+    Resource = require('./resource/resource-loader');
 
 function load() {
     engine.run();
