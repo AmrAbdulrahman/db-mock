@@ -51,6 +51,16 @@ module.exports = function(Resource) {
         }
       });
 
+      // add meta data
+      var now = new Date();
+      if (userConfig.enableCreatedAtProperty === true) {
+        object[userConfig.createdAtProperty] = now;
+      }
+
+      if (userConfig.enableUpdatedAtProperty === true) {
+        object[userConfig.updatedAtProperty] = now;
+      }
+
       // write file
       var fileName = utils.getFileName(object[userConfig.IDProperty]),
           objPath = path.join(self.$resourceDirPath, fileName);

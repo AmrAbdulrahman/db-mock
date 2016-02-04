@@ -10,7 +10,13 @@ var configDefaults = {
   data: 'db/data/',
   schema: 'db/schema/',
   seed: 'db/seed/',
-  IDProperty: 'ID'
+  IDProperty: 'ID',
+  enableCreatedAtProperty: true,
+  createdAtProperty: '_createdAt',
+  enableUpdatedAtProperty: true,
+  updatedAtProperty: '_updatedAt',
+  injectResourceName: true,
+  resourceNameProperty: '_name'
 };
 
 try {

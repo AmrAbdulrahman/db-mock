@@ -3,6 +3,7 @@
 var _ = require('lodash'),
     path = require('path'),
     logger = require('../logger'),
+    userConfig = require('../config/user'),
     utils = require('../utils');
 
 module.exports = function(Resource) {
@@ -12,16 +13,28 @@ module.exports = function(Resource) {
     try {
       var fileName = utils.getFileName(id),
           objPath = path.join(self.$resourceDirPath, fileName),
-          obj = utils.readFile(objPath);
+          object = utils.readFile(objPath);
 
       // parse date
-      _.each(obj, function(value, prop) {
+      _.each(object, function(value, prop) {
         if (self.$schema[prop] && self.$schema[prop].type === 'date') {
-          obj[prop] = new Date(value);
+          object[prop] = new Date(value);
         }
       });
 
-      return obj;
+      if (userConfig.enableCreatedAtProperty === true) {
+        object[userConfig.createdAtProperty] = new Date(object[userConfig.createdAtProperty]);
+      }
+
+      if (userConfig.enableUpdatedAtProperty === true) {
+        object[userConfig.updatedAtProperty] = new Date(object[userConfig.updatedAtProperty]);
+      }
+
+      if (userConfig.injectResourceName === true) {
+        object[userConfig.resourceNameProperty] = self.$name;
+      }
+
+      return object;
     } catch (e) {
       logger.warn('Failed to get object with id =', id);
       return null;
