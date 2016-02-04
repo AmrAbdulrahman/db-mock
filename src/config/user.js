@@ -11,6 +11,7 @@ var configDefaults = {
   schema: 'db/schema/',
   seed: 'db/seed/',
   IDProperty: 'ID',
+  foreignIDSuffix: '_ID',
   enableCreatedAtProperty: true,
   createdAtProperty: '_createdAt',
   enableUpdatedAtProperty: true,

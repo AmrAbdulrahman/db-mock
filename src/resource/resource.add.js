@@ -29,23 +29,27 @@ module.exports = function(Resource) {
         object[prop] = resource[prop];
       });
 
-      // check $has
-      _.each(self.$schema.$has, function(relationResource) {
-        var relationResourceProp = relationResource + '_id',
+      // check 1-1 relations
+      _.each(self.$schema.$has.one, function(relation) {
+        var relationResourceProp = relation.relationWith + userConfig.foreignIDSuffix,
             foreignID = resource[relationResourceProp];
 
+        if (_.isUndefined(foreignID) === true && relation.required === true) {
+          throw new Error('object of type (' + self.$name + ') must have a relation with (' + relation.relationWith + ')');
+        }
+
         // if foreign ID is not a number
-        if (foreignID && _.isNumber(foreignID) === false) {
-          throw new Error('ID reference to ' + relationResource + ' should be of type number');
+        if (_.isUndefined(foreignID) === false && _.isNumber(foreignID) === false) {
+          throw new Error('ID reference to (' + relation.relationWith + ') must be of type (number)');
         }
 
         // valid foreign ID
         if (_.isNumber(foreignID) === true) {
-          var referencedResource = resourcesCollection.of[relationResource].get(foreignID);
+          var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID);
 
           if (_.isNull(referencedResource) === true) {
-            throw new Error(relationResource + ' has no object with ID = ' + foreignID);
-          } else {
+            throw new Error(relation.relationWith + ' has no object with ID = ' + foreignID);
+          } else { // all fine!
             object[relationResourceProp] = foreignID;
           }
         }

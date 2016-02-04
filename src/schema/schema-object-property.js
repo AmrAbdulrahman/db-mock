@@ -4,6 +4,7 @@ var _ = require('lodash');
 
 var schemaObjectPropertyDefaults = {
   required: false,
+  inject: false,
   min: 0,
   max: 10000
 };

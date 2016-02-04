@@ -67,6 +67,10 @@ function log(type, msgParts) {
       console.log(msg.success);
       break;
   }
+
+  if (type === logType.ERROR) {
+    throw new Error(msg);
+  }
 }
 
 function info() {

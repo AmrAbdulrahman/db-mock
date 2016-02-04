@@ -17,7 +17,8 @@
   "$has": {
     "one": [{
       "relationWith": "profile",
-      "required": true
+      "required": true,
+      "inject": true
     }],
     "many": ["course"]
   }
