@@ -10,7 +10,8 @@ module.exports = function(Resource) {
     var self = this;
 
     try {
-      var objPath = path.join(self.$resourceDirPath, id + '.json'),
+      var fileName = utils.getFileName(id),
+          objPath = path.join(self.$resourceDirPath, fileName),
           obj = utils.readFile(objPath);
 
       // parse date

@@ -24,7 +24,7 @@ module.exports = function(Resource) {
         if (_.isUndefined(resource[prop]) === true) {
           return;
         }
-        
+
         dataTypeValidate(resource, prop, self.$schema[prop].type);
         object[prop] = resource[prop];
       });
@@ -52,7 +52,9 @@ module.exports = function(Resource) {
       });
 
       // write file
-      var objPath = path.join(self.$resourceDirPath, object[userConfig.IDProperty] + '.json');
+      var fileName = utils.getFileName(object[userConfig.IDProperty]),
+          objPath = path.join(self.$resourceDirPath, fileName);
+
       utils.writeFile(objPath, object);
 
       // return the newly created obj

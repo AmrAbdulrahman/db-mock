@@ -69,8 +69,19 @@ function writeFile(path, data, options) {
   }
 }
 
+function getFileName(ID) {
+  ID = ID + '';
+
+  while(ID.length < 6) {
+    ID = '0' + ID;
+  }
+
+  return ID + '.json';
+}
+
 module.exports = {
     mkDir: mkDir,
     readFile: readFile,
-    writeFile: writeFile
+    writeFile: writeFile,
+    getFileName: getFileName
 };
