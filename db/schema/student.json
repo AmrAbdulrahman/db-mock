@@ -20,6 +20,8 @@
       "required": true,
       "inject": true
     }],
-    "many": ["course"]
+    "many": [
+      "course"
+    ]
   }
 }

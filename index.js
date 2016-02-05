@@ -3,17 +3,26 @@
 var db = require('./src');
 db.load();
 
-var profile = db.Resource.profile.add({
-  address: 'address1',
-  phone: '01212121212'
-});
+var course = {
+  name: 'course-example',
+  student_IDs: []
+};
 
-var student = db.Resource.student.add({
-  name: 'Amr',
-  DOB: new Date(),
-  married: false,
-  sons: ['koko', 'soso'],
-  profile_ID: profile.ID
-});
+for (var i=0; i<5; i++) {
+  var profile = db.Resource.profile.add({
+    address: 'address'
+  });
 
-console.log(db.Resource.student.get(student.ID));
+  var student = db.Resource.student.add({
+    name: 'Amr',
+    DOB: new Date(),
+    married: false,
+    sons: ['koko', 'soso'],
+    profile_ID: profile.ID
+  });
+
+  course.student_IDs.push(student.ID);
+}
+
+course = db.Resource.course.add(course);
+console.log(course);

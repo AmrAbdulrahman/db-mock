@@ -29,30 +29,61 @@ module.exports = function(Resource) {
         object[prop] = resource[prop];
       });
 
-      // check 1-1 relations
-      _.each(self.$schema.$has.one, function(relation) {
-        var relationResourceProp = relation.relationWith + userConfig.foreignIDSuffix,
-            foreignID = resource[relationResourceProp];
+      _.each(['one', 'many'], function(relationType) {
+        var isOne = relationType === 'one',
+            isMany = relationType === 'many';
 
-        if (_.isUndefined(foreignID) === true && relation.required === true) {
-          throw new Error('object of type (' + self.$name + ') must have a relation with (' + relation.relationWith + ')');
-        }
+        _.each(self.$schema.$has[relationType], function(relation) {
+          var relationPropSuffix = isOne === true ? userConfig.foreignIDSuffix : userConfig.foreignIDSuffixMany,
+              relationResourceProp = relation.relationWith + relationPropSuffix,
+              foreignID = resource[relationResourceProp];
 
-        // if foreign ID is not a number
-        if (_.isUndefined(foreignID) === false && _.isNumber(foreignID) === false) {
-          throw new Error('ID reference to (' + relation.relationWith + ') must be of type (number)');
-        }
+          if (_.isUndefined(foreignID) === true && relation.required === true) {
+            throw new Error('object of type (' + self.$name + ') must have a relation with (' + relation.relationWith + ')');
+          }
 
-        // valid foreign ID
-        if (_.isNumber(foreignID) === true) {
-          var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID);
+          // if foreign ID is not a number in case of 1-1 relation
+          if (isOne === true &&
+              _.isUndefined(foreignID) === false &&
+              _.isNumber(foreignID) === false) {
+            throw new Error('ID reference to (' + relation.relationWith + ') must be of type (number)');
+          }
 
-          if (_.isNull(referencedResource) === true) {
-            throw new Error(relation.relationWith + ' has no object with ID = ' + foreignID);
-          } else { // all fine!
+          // if foreign IDs is not an array in case of 1-OO relation
+          if (isMany === true &&
+              _.isUndefined(foreignID) === false &&
+              _.isArray(foreignID) === false) {
+            throw new Error('ID references to (' + relation.relationWith + ') must be of type (array)');
+          }
+
+          // valid foreign ID
+          if (isOne === true && _.isNumber(foreignID) === true) {
+            var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
+
+            if (_.isNull(referencedResource) === true) {
+              throw new Error(relation.relationWith + ' has no object with ID = ' + foreignID);
+            } 
+
+            // all fine!
             object[relationResourceProp] = foreignID;
           }
-        }
+
+          if (isMany === true && _.isArray(foreignID) === true) {
+            _.each(foreignID, function(id) {
+              if (_.isNumber(id) === false) {
+                throw new Error('ID reference to (' + relation.relationWith + ') must be of type (number)');
+              }
+
+              var referencedResource = resourcesCollection.of[relation.relationWith].get(id, true);
+
+              if (_.isNull(referencedResource) === true) {
+                throw new Error(relation.relationWith + ' has no object with ID = ' + id);
+              }
+            });
+
+            object[relationResourceProp] = foreignID;
+          }
+        });
       });
 
       // add meta data
@@ -72,7 +103,7 @@ module.exports = function(Resource) {
       utils.writeFile(objPath, object);
 
       // return the newly created obj
-      return object;
+      return self.get(object[userConfig.IDProperty]);
     } catch (e) {
       logger.error('Failed to save', '(' + self.$name + ')' , e.message);
     }

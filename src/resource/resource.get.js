@@ -40,20 +40,40 @@ module.exports = function(Resource) {
         object[userConfig.resourceNameProperty] = self.$name;
       }
 
+      if (plain === true) {
+        return object;
+      }
+
       // inject relations if any
-      var relations = plain === true ? [] : self.$schema.$has.one;
+      var relations = _.concat(self.$schema.$has.one, self.$schema.$has.many);
       _.each(relations, function(relation) {
         if (relation.inject === false) {
           return;
         }
 
-        var relationResourceProp = relation.relationWith + userConfig.foreignIDSuffix,
-            foreignID = object[relationResourceProp],
-            referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
+        if (relation.isOne === true) {
+          var relationResourceProp = relation.relationWith + userConfig.foreignIDSuffix,
+              foreignID = object[relationResourceProp],
+              referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
 
-        // assign even if 'null', it means, the object has been
-        // deleted, and user knows.
-        object[relation.relationWith] = referencedResource;
+          // assign even if 'null', it means, the object has been
+          // deleted, and user knows.
+          object[relation.relationWith] = referencedResource;
+        } else {
+          var relationResourcePropMany = relation.relationWith + userConfig.foreignIDSuffixMany,
+              foreignIDs = object[relationResourcePropMany],
+              relationWithProp = relation.relationWith + 's';
+              // todo: use pluralize
+
+          _.each(foreignIDs, function(foreignID) {
+            var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
+
+            if (_.isNull(referencedResource) === false) {
+              object[relationWithProp] = object[relationWithProp] || [];
+              object[relationWithProp].push(referencedResource);
+            }
+          });
+        }
       });
 
       return object;

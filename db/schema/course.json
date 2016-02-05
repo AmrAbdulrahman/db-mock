@@ -2,6 +2,9 @@
   "name": "string",
   "description": "string",
   "$has": {
-    "many": ["student"]
+    "many": [{
+      "relationWith": "student",
+      "inject": true
+    }]
   }
 }

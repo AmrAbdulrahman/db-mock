@@ -32,7 +32,8 @@ function SchemaObjectRelations(relationsDefinition) {
 
   _.each(['one', 'many'], function(relationType) {
     _.each(relationsDefinition[relationType], function(relation) {
-      var schemaObjectRelation = new SchemaObjectRelation(relation);
+      var isOne = relationType === 'one',
+          schemaObjectRelation = new SchemaObjectRelation(relation, isOne);
       self[relationType].push(schemaObjectRelation);
     });
   });

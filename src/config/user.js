@@ -28,4 +28,7 @@ try {
     logger.warn('no user config provided.');
 }
 
-module.exports = _.defaults(userConfig, configDefaults);
+userConfig = _.defaults(userConfig, configDefaults);
+// so, 'ID' becomes 'IDs' and '_ID' becomes '_IDs', and so on
+userConfig.foreignIDSuffixMany = userConfig.foreignIDSuffix + 's';
+module.exports = userConfig;
