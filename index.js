@@ -8,17 +8,18 @@ var course = {
   student_IDs: []
 };
 
-for (var i=0; i<5; i++) {
+for (var i=0; i<2; i++) {
   var profile = db.Resource.profile.add({
-    address: 'address'
+    address: 'address of user ' + i
   });
 
   var student = db.Resource.student.add({
-    name: 'Amr',
-    DOB: new Date(),
+    name: 'student ' + i,
+    dateOfBirth: new Date(),
     married: false,
     sons: ['koko', 'soso'],
-    profile_ID: profile.ID
+    profile_ID: profile.ID,
+    course_IDs: [0, 1, 2]
   });
 
   course.student_IDs.push(student.ID);
