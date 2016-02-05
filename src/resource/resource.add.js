@@ -58,7 +58,9 @@ module.exports = function(Resource) {
 
           // valid foreign ID
           if (isOne === true && _.isNumber(foreignID) === true) {
-            var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
+            var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, {
+              plain: true
+            });
 
             if (_.isNull(referencedResource) === true) {
               throw new Error(relation.relationWith + ' has no object with ID = ' + foreignID);
@@ -74,7 +76,9 @@ module.exports = function(Resource) {
                 throw new Error('ID reference to (' + relation.relationWith + ') must be of type (number)');
               }
 
-              var referencedResource = resourcesCollection.of[relation.relationWith].get(id, true);
+              var referencedResource = resourcesCollection.of[relation.relationWith].get(id, {
+                plain: true
+              });
 
               if (_.isNull(referencedResource) === true) {
                 throw new Error(relation.relationWith + ' has no object with ID = ' + id);

@@ -8,13 +8,15 @@ var _ = require('lodash'),
     resourcesCollection = require('./resources-collection');
 
 module.exports = function(Resource) {
-  Resource.prototype.get = function(id, plain) {
+  Resource.prototype.get = function(id, options) {
     var self = this;
 
     try {
-      if (_.isUndefined(plain) === true) {
-        plain = false;
-      }
+      options = options || {};
+      options = _.defaults(options, {
+        plain: false,
+        parents: []
+      });
 
       var fileName = utils.getFileName(id),
           objPath = path.join(self.$resourceDirPath, fileName),
@@ -40,7 +42,7 @@ module.exports = function(Resource) {
         object[userConfig.resourceNameProperty] = self.$name;
       }
 
-      if (plain === true) {
+      if (options.plain === true) {
         return object;
       }
 
@@ -51,22 +53,31 @@ module.exports = function(Resource) {
           return;
         }
 
+        // prevent infinite recursion by watching parents chain
+        if (_.indexOf(options.parents, relation.relationWith) !== -1) {
+          return;
+        }
+
         if (relation.isOne === true) {
           var relationResourceProp = relation.relationWith + userConfig.foreignIDSuffix,
               foreignID = object[relationResourceProp],
-              referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
+              referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, {
+                parents: _.concat(options.parents, self.$name)
+              });
 
           // assign even if 'null', it means, the object has been
           // deleted, and user knows.
           object[relation.relationWith] = referencedResource;
-        } else {
+        } else { // isMany
           var relationResourcePropMany = relation.relationWith + userConfig.foreignIDSuffixMany,
               foreignIDs = object[relationResourcePropMany],
               relationWithProp = relation.relationWith + 's';
               // todo: use pluralize
 
           _.each(foreignIDs, function(foreignID) {
-            var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, true);
+            var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, {
+              parents: _.concat(options.parents, self.$name)
+            });
 
             if (_.isNull(referencedResource) === false) {
               object[relationWithProp] = object[relationWithProp] || [];
