@@ -23,3 +23,6 @@
 
 - data types
   - array type
+
+- UX
+  - https://github.com/blakeembrey/pluralize
