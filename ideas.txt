@@ -20,6 +20,7 @@
 - options
   - inject referenced objects
   - remove corresponding relations of deleted object
+  - log level
 
 - data types
   - array type
