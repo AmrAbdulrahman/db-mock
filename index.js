@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('./src');
+var db = require('./dk');
 db.load();
 
 // create course
@@ -29,7 +29,6 @@ setTimeout(function() {
     course.student_IDs.push(student.ID);
   }
 
-  course.ID = -1;
   course = db.Resource.course.update(course);
 
   console.log(course);
