@@ -24,5 +24,6 @@ function Resource(schema) {
 
 require('./resource.get')(Resource);
 require('./resource.add')(Resource);
+require('./resource.update')(Resource);
 
 module.exports = Resource;
