@@ -47,15 +47,15 @@ function load() {
 
   // validate iff schema loaded successfully
   if (errors.length === 0) {
-    logger.success(resourcesCount, 'resource(s) loaded successfully');
-    errors = validate(schema);
+    logger.success(resourcesCount, 'schema(s) loaded successfully', {bold: true});
+    logger.blank();
+
+    errors = validate(schema, resourcesCount);
   }
 
   // all fine!
   if (errors.length === 0) {
-    logger.success(resourcesCount, 'resource(s) validated successfully');
     schemaInstance = schema;
-  
   // display errors and force terminate
   } else {
     _.each(errors, function(error) {
@@ -66,7 +66,7 @@ function load() {
   }
 }
 
-function validate(schema) {
+function validate(schema, resourcesCount) {
   logger.info('validating schema...', {bold: true});
 
   var errors = [];
@@ -74,6 +74,11 @@ function validate(schema) {
   _.each(schema, function(resource) {
     errors = _.concat(errors, resource.validate(schema));
   });
+
+  if (errors.length === 0) {
+    logger.success(resourcesCount, 'schema(s) validated successfully', {bold: true});
+    logger.blank();
+  }
 
   return errors;
 }

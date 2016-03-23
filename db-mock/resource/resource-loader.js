@@ -15,9 +15,14 @@ function load() {
   utils.mkDir(userConfig.data);
 
   // create resources
+  var resourcesCount = 0;
   _.each(schema.get(), function(resourceSchema) {
     resourcesCollection.of[resourceSchema.$name] = new Resource(resourceSchema);
+    resourcesCount ++;
   });
+
+  logger.success(resourcesCount, 'resources loaded successfully', {bold: true});
+  logger.blank();
 
   return resourcesCollection.get();
 }

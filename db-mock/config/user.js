@@ -7,6 +7,8 @@ var _ = require('lodash'),
     userConfig = {};
 
 var configDefaults = {
+  socketsPort: 6789,
+  webConsolePort: 6790,
   data: 'db/data/',
   schema: 'db/schema/',
   seed: 'db/seed/',
@@ -23,7 +25,8 @@ var configDefaults = {
 try {
     logger.info('reading user config...', {bold: true});
     userConfig = utils.readFile(internalConfig.userConfigFilePath);
-    logger.success('config read successfully');
+    logger.success('config read successfully', {bold: true});
+    logger.blank();
 } catch(e) {
     logger.warn('no user config provided.');
 }

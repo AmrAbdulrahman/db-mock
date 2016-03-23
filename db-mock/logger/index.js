@@ -21,8 +21,8 @@ function readMsg(args) {
       options = {},
       hasOptions = false;
 
-  if (typeof args[args.length-1] === 'object') {
-    options = args[args.length-1];
+  if (typeof args[args.length - 1] === 'object') {
+    options = args[args.length - 1];
     hasOptions = true;
   }
 
@@ -89,9 +89,14 @@ function success() {
   log(logType.SUCCESS, arguments);
 }
 
+function blank() {
+  info('...');
+}
+
 module.exports = {
   info: info,
   warn: warn,
   error: error,
-  success: success
+  success: success,
+  blank: blank
 };

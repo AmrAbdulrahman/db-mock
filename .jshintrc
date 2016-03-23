@@ -9,6 +9,8 @@
     "_": true,
     "module": true,
     "require": true,
-    "console": true
+    "console": true,
+    "process": true,
+    "__dirname": true
   }
 }
