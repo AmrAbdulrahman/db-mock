@@ -1,4 +1,1 @@
-'use strict';
-
-var db = require('./db-mock');
-console.log(db.student.get(0));
+module.exports = require('./db-mock')(process.argv);

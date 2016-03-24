@@ -79,9 +79,14 @@ function getFileName(ID) {
   return ID + '.json';
 }
 
+function getID(fileName) {
+  return _.parseInt(fileName.replace('.json', ''));
+}
+
 module.exports = {
     mkDir: mkDir,
     readFile: readFile,
     writeFile: writeFile,
-    getFileName: getFileName
+    getFileName: getFileName,
+    getID: getID
 };

@@ -10,7 +10,7 @@ function run() {
   logger.info('running seed script in', userConfig.seed, '...', {bold: true});
 
   // run script
-  require('../../' + userConfig.seed)(db);
+  require('../../../' + userConfig.seed)(db);
 
   logger.success('seed script ran successfully', {bold: true});
 }
