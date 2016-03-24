@@ -1,5 +1,5 @@
 {
-  "data": "db/data/",
-  "schema": "db/schema/",
-  "seed": "db/seed.js"
+  "data": "db-mock/db/data/",
+  "schema": "db-mock/db/schema/",
+  "seed": "db-mock/db/seed.js"
 }
