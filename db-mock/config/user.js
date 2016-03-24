@@ -11,7 +11,7 @@ var configDefaults = {
   webConsolePort: 6790,
   data: 'db/data/',
   schema: 'db/schema/',
-  seed: 'db/seed/',
+  seed: 'db/seed.js',
   IDProperty: 'ID',
   foreignIDSuffix: '_ID',
   enableCreatedAtProperty: true,

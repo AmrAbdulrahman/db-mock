@@ -1,7 +1,5 @@
 'use strict';
 
-var engine = require('../engine'),
-    resourcesCollection = require('../resource/resources-collection');
+var engine = require('../engine');
 
-engine.run();
-module.exports = resourcesCollection.get();
+module.exports = engine.run();
