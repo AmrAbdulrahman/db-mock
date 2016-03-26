@@ -22,7 +22,7 @@ module.exports = function(Resource) {
       // physical deletion
       fs.unlinkSync(objPath);
       
-      logger.success('Deleted', self.$name, 'with id = ', id);
+      logger.success('Deleted', self.$name, 'with id =', id);
       return originalObject;
     } catch (e) {
       logger.warn('Failed to delete object with id =', id);

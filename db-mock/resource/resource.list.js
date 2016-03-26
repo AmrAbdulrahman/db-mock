@@ -27,7 +27,7 @@ module.exports = function(Resource) {
         return self.get(resourceID);
       });
     } catch (e) {
-      logger.warn('Failed to list ', self.$name);
+      logger.warn('Failed to list', self.$name);
       return null;
     }
   };
