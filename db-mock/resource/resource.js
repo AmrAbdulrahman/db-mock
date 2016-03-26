@@ -27,5 +27,6 @@ require('./resource.add')(Resource);
 require('./resource.update')(Resource);
 require('./resource.list')(Resource);
 require('./resource.delete')(Resource);
+require('./resource.query')(Resource);
 
 module.exports = Resource;
