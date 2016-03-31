@@ -9,7 +9,7 @@ var _ = require('lodash'),
 module.exports = function(Resource) {
   Resource.prototype.query = function(comparer, options) {
     var self = this;
-    logger.info(comparer);
+
     try {
       options = options || {};
       options = _.defaults(options, {});
