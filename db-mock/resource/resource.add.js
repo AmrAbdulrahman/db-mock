@@ -25,8 +25,10 @@ module.exports = function(Resource) {
           return;
         }
 
-        dataTypeValidate(resource, prop, self.$schema[prop].type);
-        object[prop] = resource[prop];
+        if (resource[prop] !== null) {
+          dataTypeValidate(resource, prop, self.$schema[prop].type);
+          object[prop] = resource[prop];
+        }
       });
 
       _.each(['one', 'many'], function(relationType) {
@@ -64,7 +66,7 @@ module.exports = function(Resource) {
 
             if (_.isNull(referencedResource) === true) {
               throw new Error(relation.relationWith + ' has no object with ID = ' + foreignID);
-            } 
+            }
 
             // all fine!
             object[relationResourceProp] = foreignID;
