@@ -1,6 +1,6 @@
 {
   "name": "db-mock",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "DB mock",
   "main": "index.js",
   "dependencies": {

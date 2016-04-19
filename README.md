@@ -116,7 +116,7 @@ module.exports = function(db) {
 ## Getting started
 If you know NodeJS and Express, then let's do few steps and have our api-mocks running just like real ones.
 I've created sample application for you to check and follow
-Here it is! 
+[Here it is!](https://github.com/AmrAbdulrahman/db-mock-tutorial) 
 
 ## Data types
 - string
