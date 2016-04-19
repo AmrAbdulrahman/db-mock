@@ -5,23 +5,46 @@
 > a very simple setup, you can have a db-like and an api-mocks in matter of minutes.
 > If you mock you api using Node and Express, db-mock will make your life 10x easier!
 
-## Sample
-<p align="center">
-  <img align="center" src="http://s21.postimg.org/jrydvffo7/OSX_CALC.png" alt="OSX Calculator" />
-</p>
 
+## Features
+- handy data types (string, number, bool, date, array, object)
+- data type constraints (required, min, max)
+- one-to-one and one-to-many relations ($has, and $hasMany)S
+- injecting related resources optionally
+- handy resource apis (add, get, update, delete, list and query)
+- validations are everywhere to help you spot any conflicts (validating schema, and operations)
+- configurations for almost everything
+- colorful and informative logging
 
 ## Install
 ```
 npm install db-mock --save-dev
 ```
 
-## Schema example
+## Examples
+# Seed data
+```
+node db-mock seed
+```
+<p align="center">
+  <img align="center" src="https://i.imgsafe.org/79b793e.png" alt="seeding data" />
+</p>
+
+
+# Clean data
+```
+node db-mock clean
+```
+<p align="center">
+  <img align="center" src="https://i.imgsafe.org/8dae999.png" alt="cleaning data" />
+</p>
+
+# Schema example
 ```
 // profile.json
 {
   "address": "string",
-  "phone": "string"  
+  "phone": "string"
 }
 ```
 
@@ -70,7 +93,7 @@ npm install db-mock --save-dev
 }
 ```
 
-## Seed example
+# Seed example
 ```
 // seed.js
 var _ = require('lodash');
@@ -89,6 +112,11 @@ module.exports = function(db) {
   });
 }
 ```
+
+## Getting started
+If you know NodeJS and Express, then let's do few steps and have our api-mocks running just like real ones.
+I've created sample application for you to check and follow
+Here it is! 
 
 ## Data types
 - string
