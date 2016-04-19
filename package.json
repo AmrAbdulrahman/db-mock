@@ -1,8 +1,9 @@
 {
   "name": "db-mock",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "DB mock",
   "main": "index.js",
+  "bin": "bin/db-mock",
   "dependencies": {
     "colors": "^1.1.2",
     "express": "^4.13.4",

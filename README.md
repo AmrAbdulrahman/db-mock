@@ -7,14 +7,18 @@
 
 
 ## Features
-- handy data types (string, number, bool, date, array, object)
-- data type constraints (required, min, max)
-- one-to-one and one-to-many relations ($has, and $hasMany)S
-- injecting related resources optionally
-- handy resource apis (add, get, update, delete, list and query)
-- validations are everywhere to help you spot any conflicts (validating schema, and operations)
-- configurations for almost everything
-- colorful and informative logging
+* handy data types (string, number, bool, date, array, object)
+* data type constraints (required, min, max)
+* one-to-one and one-to-many relations ($has, and $hasMany)S
+* injecting related resources optionally
+* handy resource apis (add, get, update, delete, list and query)
+* validations are everywhere to help you spot any conflicts (validating schema, and operations)
+* configurations for almost everything
+* colorful and informative logging
+* It can run in three different modes
+  * as a node module, using: require('db-mock')
+  * as a standalone module that communicates on sockets (still under development)
+  * as a web-console that makes you manage everything visually, edit schema and browse the data (still under development)
 
 ## Install
 ```
@@ -22,24 +26,24 @@ npm install db-mock --save-dev
 ```
 
 ## Examples
-# Seed data
+### Seed data
 ```
-node db-mock seed
+./node_modules/.bin/db-mock seed
 ```
 <p align="center">
   <img align="center" src="https://i.imgsafe.org/79b793e.png" alt="seeding data" />
 </p>
 
 
-# Clean data
+### Clean data
 ```
-node db-mock clean
+./node_modules/.bin/db-mock clean
 ```
 <p align="center">
   <img align="center" src="https://i.imgsafe.org/8dae999.png" alt="cleaning data" />
 </p>
 
-# Schema example
+### Schema example
 ```
 // profile.json
 {
@@ -93,7 +97,7 @@ node db-mock clean
 }
 ```
 
-# Seed example
+### Seed example
 ```
 // seed.js
 var _ = require('lodash');
@@ -133,9 +137,9 @@ Option                    | Default            | Description
 ------------------------- | ------------------ | ---------------------
 socketsPort               | 6789               | The port of engine when it runs in sockets mode
 webConsolePort            | 6790               | The port of the web-console
-data                      | 'db/data/'         | The directory of data (should be git ignored)
-schema                    | 'db/schema/'       | Directory of the schema
-seed                      | 'db/seed.js'       | File location of seed script
+data                      | 'db-mock/data/'    | The directory of data (should be git ignored)
+schema                    | 'db-mock/schema/'  | Directory of the schema
+seed                      | 'db-mock/seed.js'  | File location of seed script
 IDProperty                | 'ID'               | ID property
 foreignIDSuffix           | '_ID'              | How should foreign IDs be. (classID, classId, class_id, or classID)
 enableCreatedAtProperty   | true               | Auto insert 'created at' field
@@ -154,6 +158,6 @@ Sample
   "foreignIDSuffix": "ID"
 }
 ```
-
+	
 ## License
 MIT
