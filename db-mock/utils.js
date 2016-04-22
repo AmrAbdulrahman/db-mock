@@ -20,7 +20,7 @@ function mkDir(path, options) {
       if (options.cleanIfExist === true) {
         rimraf.sync(path); // remove folder first
         fs.mkdirSync(path);
-        logger.info(path, 'cleaned');        
+        logger.info(path, 'cleaned');
       }
     } else {
       logger.error('can\'t create dir:', path);
@@ -28,6 +28,30 @@ function mkDir(path, options) {
   }
 }
 
+function readDirSyncRecursive(dir, filelist) {
+  try {
+    if (dir[dir.length-1] != '/') {
+      dir = dir.concat('/');
+    }
+
+    var fs = fs || require('fs'),
+        files = fs.readdirSync(dir);
+
+    filelist = filelist || [];
+
+    _.each(files, function(file) {
+      if (fs.statSync(dir + file).isDirectory()) {
+        filelist = readDirSyncRecursive(dir + file + '/', filelist);
+      } else {
+        filelist.push(dir + file);
+      }
+    });
+
+    return filelist;
+  } catch (e) {
+    console.log(e);
+  }
+}
 function readFile(path, options) {
   options = _.defaults(options, {
     json: true,
@@ -85,6 +109,7 @@ function getID(fileName) {
 
 module.exports = {
     mkDir: mkDir,
+    readDirSyncRecursive: readDirSyncRecursive,
     readFile: readFile,
     writeFile: writeFile,
     getFileName: getFileName,

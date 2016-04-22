@@ -10,7 +10,7 @@ var fs = require('fs'),
     schemaInstance = null;
 
 function getResourceName(fileName) {
-  return fileName.replace('.json', '');
+  return _.last(fileName.split('/')).replace('.json', '');
 }
 
 function load() {
@@ -22,7 +22,7 @@ function load() {
       errors = [];
 
   try {
-    resourcesFiles = fs.readdirSync(userConfig.schema);
+    resourcesFiles = utils.readDirSyncRecursive(userConfig.schema);
   } catch (e) {
     logger.error(userConfig.schema, 'not found');
     throw new Error('Can\'t load schema.');
@@ -32,12 +32,11 @@ function load() {
     logger.warn(userConfig.schema, 'is empty');
   }
 
-  _.each(resourcesFiles, function(file) {
-    var resourcePath = path.join(userConfig.schema, file),
-        resourceSchema = utils.readFile(resourcePath);
+  _.each(resourcesFiles, function(resourcePath) {
+    var resourceSchema = utils.readFile(resourcePath);
 
     try {
-      var resourceName = getResourceName(file);
+      var resourceName = getResourceName(resourcePath);
       schema[resourceName] = new SchemaObject(resourceName, resourceSchema);
       resourcesCount++;
     } catch (e) {
@@ -90,7 +89,7 @@ function get(resource) {
 
   if (resource && _.isUndefined(schemaInstance[resource])) {
     return logger.error('(' + resource + ') can\'t be found');
-  }  
+  }
 
   if (resource) {
     return schemaInstance[resource];
