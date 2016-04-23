@@ -1,6 +1,6 @@
 {
   "name": "db-mock",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "DB mock",
   "main": "index.js",
   "bin": "bin/db-mock",
@@ -18,6 +18,13 @@
     "grunt-contrib-jshint": "^0.12.0",
     "grunt-jscs": "^2.7.0",
     "load-grunt-tasks": "^3.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmrAbdulrahman/db-mock"
+  },
+  "bugs": {
+    "url": "https://github.com/AmrAbdulrahman/db-mock/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
