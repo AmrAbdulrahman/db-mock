@@ -74,13 +74,15 @@ module.exports = function(Resource) {
               relationWithProp = relation.relationWith + 's';
               // todo: use pluralize
 
+          // return an empty array anyway
+          object[relationWithProp] = [];
+
           _.each(foreignIDs, function(foreignID) {
             var referencedResource = resourcesCollection.of[relation.relationWith].get(foreignID, {
               parents: _.concat(options.parents, self.$name)
             });
 
             if (_.isNull(referencedResource) === false) {
-              object[relationWithProp] = object[relationWithProp] || [];
               object[relationWithProp].push(referencedResource);
             }
           });
