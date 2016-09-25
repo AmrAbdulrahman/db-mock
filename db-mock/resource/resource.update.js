@@ -19,13 +19,15 @@ module.exports = function(Resource) {
       }
 
       var resourceID = updatedResource[userConfig.IDProperty],
-          currentResource = resourcesCollection.of[self.$name].get(resourceID);
+          currentResource = resourcesCollection.of[self.$name].get(resourceID, {
+            plain: true,
+          });
 
       // non-existing object with this ID
       if (_.isNull(currentResource) === true) {
         throw new Error('there\'s no object with ID = ' + resourceID);
       }
-      
+
 
       // note: going through the schema prunes extra data
       _.each(self.$schema.props({withRelations: false}), function(prop) {
@@ -72,7 +74,7 @@ module.exports = function(Resource) {
 
             if (_.isNull(referencedResource) === true) {
               throw new Error(relation.relationWith + ' has no object with ID = ' + foreignID);
-            } 
+            }
 
             // all fine!
             currentResource[relationResourceProp] = foreignID;
